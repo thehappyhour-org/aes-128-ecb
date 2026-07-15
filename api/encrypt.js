@@ -1,0 +1,31 @@
+import crypto from "node:crypto";
+
+export default function handler(req, res) {
+  const q = req.query.q;
+
+  if (!q) {
+    return res.status(400).json({
+      success: false,
+      error: "Missing q parameter"
+    });
+  }
+
+  try {
+    const key = "qwertyuioplkjhgf";
+    const cipher = crypto.createCipheriv("aes-128-ecb", key, null);
+
+    const encrypted =
+      cipher.update(q, "utf8", "hex") +
+      cipher.final("hex");
+
+    return res.status(200).json({
+      success: true,
+      encrypted
+    });
+  } catch (e) {
+    return res.status(500).json({
+      success: false,
+      error: e.message
+    });
+  }
+}
