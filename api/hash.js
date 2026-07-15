@@ -14,13 +14,13 @@ export default function handler(req, res) {
     const key = "qwertyuioplkjhgf";
     const cipher = crypto.createCipheriv("aes-128-ecb", key, null);
 
-    const encrypted =
+    const token =
       cipher.update(q, "utf8", "hex") +
       cipher.final("hex");
 
     res.json({
       success: true,
-      encrypted
+      token
     });
   } catch (e) {
     res.status(500).json({
