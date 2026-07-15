@@ -18,12 +18,12 @@ export default function handler(req, res) {
       cipher.update(q, "utf8", "hex") +
       cipher.final("hex");
 
-    return res.status(200).json({
+    res.json({
       success: true,
       encrypted
     });
   } catch (e) {
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       error: e.message
     });
